@@ -15,12 +15,6 @@ class Application
     /** @var Request $request */
     private $request;
 
-    /**
-     * @var array
-     * url参数
-     */
-    private $params = array();
-
     private static $instance = null;
 
     public function __construct()
@@ -55,7 +49,7 @@ class Application
             if($reflect->hasMethod($this->request->getMethod())) {
                 $class = $reflect->newInstance();
                 $method = $this->request->getMethod();
-                $class->$method();
+                $class->$method($this->request);
             } else {
                 throw new \Exception("方法{$this->request->getMethod()}不存在");
             }

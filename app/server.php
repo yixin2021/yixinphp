@@ -1,7 +1,7 @@
 <?php
 //定义开发环境
 define('ENV', 'dev');
-//定义调试模式
+//定义是否开启调试模式
 define('DEBUG', true);
 //定义系统根目录
 define('APP_ROOT', dirname(__DIR__) . '/');

@@ -31,6 +31,12 @@ class Request
     private $method;
 
     /**
+     * @var array
+     * 参数
+     */
+    private $params = array();
+
+    /**
      * @return mixed
      */
     public function getModule()
@@ -79,6 +85,22 @@ class Request
     }
 
     /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->params ?? [];
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params): void
+    {
+        $this->params = $params;
+    }
+
+    /**
      * @param $configs
      * 初始化请求
      */
@@ -87,6 +109,7 @@ class Request
         $requestUrl = trim($_SERVER['REQUEST_URI'], "/");
         $paths = parse_url($requestUrl);
         if (!is_null($paths)) {
+            //设置模块、控制器、方法
             $urlArray = explode('/', $paths['path']);
             if (count($urlArray) === 3) {
                 $this->setModule($urlArray[0]);
@@ -97,12 +120,23 @@ class Request
                 $this->setController($urlArray[0]);
                 $this->setMethod($urlArray[1]);
             }
-
+            //处理url参数
+            $params = $_GET + $_POST;
+            $this->setParams($params);
         } else {
             //默认访问admin/index/index
             $this->setModule($configs['default_url']['module']);
             $this->setController($configs['default_url']['controller']);
             $this->setMethod($configs['default_url']['method']);
         }
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     * 获取参数值
+     */
+    public function getParam($name) {
+        return isset($this->params[$name]) ? $this->params[$name] : null;
     }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "yixinphp/php",
+  "description": "yixinphp framework",
+  "type": "framework",
+  "keywords": [
+    "php",
+    "php framework"
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "autoload": {
+    "files": [
+      "yixinphp/BootStrap.php",
+      "app/functions.php"
+    ],
+    "psr-4": {
+      "yixinphp\\": "yixinphp/src",
+      "app\\": "app"
+    }
+  }
+}
